@@ -1,0 +1,965 @@
+Skip to Content
+
+Others: 1,621,257.00
+
+
+  pysparknotebookPythonConnecting... Still working... spinner
+
+  *
+    //
+
+Upgrade
+
+<https://community.cloud.databricks.com/?o=4071279512467117#>
+Active persona
+DData Science & Engineering
+
+DData Science & Engineering
+<https://community.cloud.databricks.com/?o=4071279512467117#>
+
+MMachine Learning
+<https://community.cloud.databricks.com/?o=4071279512467117#ml/dashboard>
+
+Create
+
+Notebook
+
+Table
+<https://community.cloud.databricks.com/?o=4071279512467117#tables/new>Cluster <https://community.cloud.databricks.com/?o=4071279512467117#create/cluster>NewPipeline <https://community.cloud.databricks.com/?o=4071279512467117#joblist/pipelines/create>
+
+Workspace
+
+Recents
+
+Search
+
+Data
+
+Compute
+<https://community.cloud.databricks.com/?o=4071279512467117#setting/clusters>
+
+Workflows
+<https://community.cloud.databricks.com/?o=4071279512467117#joblist>
+
+Help
+
+Settings
+
+databasepipeline@gmail.com
+
+Menu options
+
+/
+
+/
+//dem3
+
+// File // <#>
+// Edit // <#>
+// View: Standard // <#>
+// Permissions
+// Run All <#>
+// Clear // <#>
+// <#>
+// Publish <#>
+// Comments <#>
+//Experiment <#>
+// Revision history <#>
+
+//////
+
+A table of contents will be added here when a notebook has Markdown
+headings.
+
+|%md # Heading 1|
+//
+
+Loading...
+////
+//Cmd 1 <#notebook/807394446833859/command/807394446833860>
+//
+Python <#>//// <#>// <#>// <#>// <#>
+
+1
+from pyspark.sql import SparkSession
+
+2
+spark = SparkSession.builder.appName("Spark DataFrames").getOrCreate()
+
+Command took 0.11 seconds -- by databasepipeline@gmail.com at 7/20/2022,
+9:16:17 AM on dem3
+////
+//Cmd 2 <#notebook/807394446833859/command/3345943624692756>
+//
+Python <#>//// <#>// <#>// <#>// <#>
+
+xxxxxxxxxx
+
+1
+ 
+1
+
+excel_df1 = spark.read.format("com.crealytics.spark.excel").option("header", "true").option("inferSchema", "true").option("dataAddress", "'Detail_67_3_5'!A1").load("/FileStore/tables/5308.xlsx")
+
+//(1) Spark Jobs
+Command took 3.06 seconds -- by databasepipeline@gmail.com at 7/20/2022,
+9:41:32 AM on dem3
+////
+//Cmd 3 <#notebook/807394446833859/command/3345943624692757>
+//
+Python <#>//// <#>// <#>// <#>// <#>
+
+xxxxxxxxxx
+
+4
+ 
+1
+
+# excel_df1.show()
+
+2
+
+excel_df1.printSchema()
+
+3
+
+excel_df1.count()
+
+4
+
+​
+
+//(2) Spark Jobs
+root
+ |-- Record Index: double (nullable = true)
+ |-- Status: string (nullable = true)
+ |-- JumpTo: double (nullable = true)
+ |-- Cycle: double (nullable = true)
+ |-- Step: double (nullable = true)
+ |-- Cur(mA): double (nullable = true)
+ |-- Voltage(V): double (nullable = true)
+ |-- CapaCity(mAh): double (nullable = true)
+ |-- Energy(mWh): double (nullable = true)
+ |-- Relative Time(h:min:s.ms): string (nullable = true)
+ |-- Absolute Time: timestamp (nullable = true)
+
+Out[50]: 29403
+Command took 3.05 seconds -- by databasepipeline@gmail.com at 7/20/2022,
+9:51:39 AM on dem3
+////
+//Cmd 4 <#notebook/807394446833859/command/3345943624692771>
+//
+Python <#>//// <#>// <#>// <#>// <#>
+.columns
+
+xxxxxxxxxx
+
+1
+ 
+1
+
+excel_df1.columns
+
+Out[64]: ['Record Index',
+ 'Status',
+ 'JumpTo',
+ 'Cycle',
+ 'Step',
+ 'Cur(mA)',
+ 'Voltage(V)',
+ 'CapaCity(mAh)',
+ 'Energy(mWh)',
+ 'Relative Time(h:min:s.ms)',
+ 'Absolute Time']
+Command took 0.04 seconds -- by databasepipeline@gmail.com at 7/20/2022,
+10:12:21 AM on dem3
+////
+//Cmd 5 <#notebook/807394446833859/command/3345943624692770>
+//
+Python <#>//// <#>// <#>// <#>// <#>
+from pyspark.sql.functions import col excel_selected_data1 =
+excel_df1.select(col("Record
+Index").alias("Row_id"),col("Cur(mA)").alias("current_Data"),col("Voltage(V)").alias("Voltage_Data"),col("CapaCity(mAh)").alias("Capcity_Data"),col("Absolute Time"))
+
+xxxxxxxxxx
+
+2
+ 
+1
+
+from pyspark.sql.functions import col
+
+2
+
+excel_selected_data1 = excel_df1.select(col("Record Index").alias("Row_id"),col("Cur(mA)").alias("current_Data"),col("Voltage(V)").alias("Voltage_Data"),col("CapaCity(mAh)").alias("Capcity_Data"),col("Absolute Time"))
+
+Command took 0.09 seconds -- by databasepipeline@gmail.com at 7/20/2022,
+10:22:21 AM on dem3
+////
+//Cmd 6 <#notebook/807394446833859/command/3345943624692769>
+//
+Python <#>//// <#>// <#>// <#>// <#>
+1
+
+xxxxxxxxxx
+
+1
+ 
+1
+
+excel_selected_data1.show()
+
+//(1) Spark Jobs
++------+------------+------------+------------+-------------------+
+|Row_id|current_Data|Voltage_Data|Capcity_Data|      Absolute Time|
++------+------------+------------+------------+-------------------+
+|   1.0|         0.0|        3.59|         0.0|2019-11-15 19:28:43|
+|   2.0|         0.0|        3.59|         0.0|2019-11-15 19:28:44|
+|   3.0|         0.0|        3.59|         0.0|2019-11-15 19:28:45|
+|   4.0|         0.0|        3.59|         0.0|2019-11-15 19:28:46|
+|   5.0|         0.0|        3.59|         0.0|2019-11-15 19:28:47|
+|   6.0|         0.0|        3.59|         0.0|2019-11-15 19:28:48|
+|   7.0|      -900.6|      3.5627|         0.0|2019-11-15 19:28:49|
+|   8.0|      -900.6|      3.5627|       0.025|2019-11-15 19:28:49|
+|   9.0|         0.0|      3.5894|         0.0|2019-11-15 19:28:49|
+|  10.0|         0.0|      3.5894|         0.0|2019-11-15 19:28:49|
+|  11.0|         0.0|      3.5897|         0.0|2019-11-15 19:28:49|
+|  12.0|         0.0|      3.5897|         0.0|2019-11-15 19:28:50|
+|  13.0|         0.0|      3.5897|         0.0|2019-11-15 19:28:51|
+|  14.0|         0.0|        3.59|         0.0|2019-11-15 19:28:52|
+|  15.0|         0.0|      3.5897|         0.0|2019-11-15 19:28:53|
+|  16.0|         0.0|        3.59|         0.0|2019-11-15 19:28:54|
+|  17.0|         0.0|        3.59|         0.0|2019-11-15 19:28:55|
+|  18.0|         0.0|      3.5897|         0.0|2019-11-15 19:28:56|
+|  19.0|         0.0|      3.5897|         0.0|2019-11-15 19:28:57|
+|  20.0|         0.0|        3.59|         0.0|2019-11-15 19:28:58|
++------+------------+------------+------------+-------------------+
+only showing top 20 rows
+
+Command took 3.38 seconds -- by databasepipeline@gmail.com at 7/20/2022,
+10:22:25 AM on dem3
+////
+//Cmd 7 <#notebook/807394446833859/command/3345943624692760>
+//
+Python <#>//// <#>// <#>// <#>// <#>
+
+xxxxxxxxxx
+
+1
+ 
+1
+
+excel_df2 = spark.read.format("com.crealytics.spark.excel").option("header", "true").option("inferSchema", "true").option("dataAddress", "'DetailVol_67_3_5'!A1").load("/FileStore/tables/5308.xlsx")
+
+//(1) Spark Jobs
+Command took 2.93 seconds -- by databasepipeline@gmail.com at 7/20/2022,
+9:44:02 AM on dem3
+////
+//Cmd 8 <#notebook/807394446833859/command/3345943624692761>
+//
+Python <#>//// <#>// <#>// <#>// <#>
+
+xxxxxxxxxx
+
+3
+ 
+1
+
+# excel_df2.show()
+
+2
+
+excel_df2.count()
+
+3
+
+excel_df2.printSchema()
+
+//(2) Spark Jobs
+root
+ |-- Record ID: double (nullable = true)
+ |-- Step Name: string (nullable = true)
+ |-- Relative Time(h:min:s.ms): string (nullable = true)
+ |-- Realtime: timestamp (nullable = true)
+ |-- Auxiliary channel TU1 U(V): double (nullable = true)
+ |-- Gap of Voltage: double (nullable = true)
+
+Command took 3.09 seconds -- by databasepipeline@gmail.com at 7/20/2022,
+9:51:12 AM on dem3
+////
+//Cmd 9 <#notebook/807394446833859/command/3345943624692772>
+//
+Python <#>//// <#>// <#>// <#>// <#>
+
+xxxxxxxxxx
+
+3
+ 
+1
+
+from pyspark.sql.functions import col
+
+2
+
+excel_selected_data2 = excel_df2.select(col("Record ID").alias("Row_id"),col("Auxiliary channel TU1 U(V)").alias("Temperature"))
+
+3
+
+​
+
+Command took 0.06 seconds -- by databasepipeline@gmail.com at 7/20/2022,
+10:27:38 AM on dem3
+////
+//Cmd 10 <#notebook/807394446833859/command/3345943624692773>
+//
+Python <#>//// <#>// <#>// <#>// <#>
+excel_selected_data2
+
+xxxxxxxxxx
+
+1
+ 
+1
+
+excel_selected_data2.show()
+
+//(1) Spark Jobs
++------+-----------+
+|Row_id|Temperature|
++------+-----------+
+|   1.0|    -0.0032|
+|   2.0|    -0.0033|
+|   3.0|    -0.0032|
+|   4.0|     -0.003|
+|   5.0|    -0.0032|
+|   6.0|    -0.0032|
+|   7.0|    -0.0032|
+|   8.0|    -0.0032|
+|   9.0|    -0.0032|
+|  10.0|    -0.0032|
+|  11.0|    -0.0032|
+|  12.0|    -0.0032|
+|  13.0|    -0.0032|
+|  14.0|     -0.003|
+|  15.0|    -0.0032|
+|  16.0|    -0.0032|
+|  17.0|     -0.003|
+|  18.0|    -0.0032|
+|  19.0|    -0.0032|
+|  20.0|    -0.0032|
++------+-----------+
+only showing top 20 rows
+
+Command took 3.25 seconds -- by databasepipeline@gmail.com at 7/20/2022,
+10:27:41 AM on dem3
+////
+//Cmd 11 <#notebook/807394446833859/command/3345943624692774>
+//
+Python <#>//// <#>// <#>// <#>// <#>
+columns
+
+xxxxxxxxxx
+
+1
+ 
+1
+
+excel_selected_data2.columns
+
+Out[97]: ['Row_id', 'Temperature']
+Command took 0.02 seconds -- by databasepipeline@gmail.com at 7/20/2022,
+10:36:33 AM on dem3
+////
+//Cmd 12 <#notebook/807394446833859/command/3345943624692764>
+//
+Python <#>//// <#>// <#>// <#>// <#>
+
+xxxxxxxxxx
+
+2
+ 
+1
+
+excel_selected_data1.createOrReplaceTempView("table1")
+
+2
+
+excel_selected_data2.createOrReplaceTempView("table2")
+
+Command took 0.06 seconds -- by databasepipeline@gmail.com at 7/20/2022,
+10:34:07 AM on dem3
+////
+//Cmd 13 <#notebook/807394446833859/command/3345943624692765>
+//
+Python <#>//// <#>// <#>// <#>// <#>
+
+xxxxxxxxxx
+
+1
+ 
+1
+
+data = spark.sql("select * from table1  INNER JOIN table2 ON table1.Row_id = table2.Row_id;")
+
+Command took 0.08 seconds -- by databasepipeline@gmail.com at 7/20/2022,
+10:38:14 AM on dem3
+////
+//Cmd 14 <#notebook/807394446833859/command/3345943624692766>
+//
+Python <#>//// <#>// <#>// <#>// <#>
+data.
+
+xxxxxxxxxx
+
+1
+ 
+1
+
+data.show()
+
+//(3) Spark Jobs
++------+------------+------------+------------------+-------------------+------+-----------+
+|Row_id|current_Data|Voltage_Data|      Capcity_Data|      Absolute Time|Row_id|Temperature|
++------+------------+------------+------------------+-------------------+------+-----------+
+| 299.0|         0.0|        3.59|               0.0|2019-11-15 19:33:37| 299.0|    -0.0032|
+| 305.0|         0.0|        3.59|               0.0|2019-11-15 19:33:43| 305.0|     -0.003|
+| 496.0|         0.0|      3.5897|               0.0|2019-11-15 19:36:54| 496.0|    -0.0032|
+| 558.0|         0.0|      3.5897|               0.0|2019-11-15 19:37:56| 558.0|    -0.0032|
+| 596.0|         0.0|      3.5897|               0.0|2019-11-15 19:38:34| 596.0|     -0.003|
+| 692.0|       900.6|      3.6421|20.013416666666668|2019-11-15 19:40:09| 692.0|    -0.0032|
+| 769.0|       900.6|      3.6489| 39.27736111111111|2019-11-15 19:41:26| 769.0|    -0.0032|
+| 934.0|       900.6|      3.6594| 80.55588888888889|2019-11-15 19:44:11| 934.0|     -0.003|
+|1051.0|       900.6|      3.6662|109.82894444444445|2019-11-15 19:46:08|1051.0|    -0.0033|
+|1761.0|       900.6|      3.7087|           287.458|2019-11-15 19:57:58|1761.0|    -0.0032|
+|2734.0|       900.6|      3.7729| 530.8052777777777|2019-11-15 20:14:11|2734.0|     -0.003|
+|2815.0|       901.0|      3.7788| 551.0828333333334|2019-11-15 20:15:32|2815.0|    -0.0032|
+|2862.0|       900.6|      3.7822| 562.8487777777777|2019-11-15 20:16:19|2862.0|    -0.0032|
+|3597.0|       900.6|      3.8361|          746.8475|2019-11-15 20:28:34|3597.0|    -0.0032|
+| 147.0|         0.0|        3.59|               0.0|2019-11-15 19:31:05| 147.0|    -0.0032|
+| 170.0|         0.0|        3.59|               0.0|2019-11-15 19:31:28| 170.0|    -0.0032|
+| 184.0|         0.0|        3.59|               0.0|2019-11-15 19:31:42| 184.0|     -0.003|
+| 576.0|         0.0|      3.5897|               0.0|2019-11-15 19:38:14| 576.0|     -0.003|
+| 720.0|       901.0|      3.6452|           27.0185|2019-11-15 19:40:37| 720.0|     -0.003|
+| 782.0|       900.6|      3.6501|42.529472222222225|2019-11-15 19:41:39| 782.0|    -0.0032|
++------+------------+------------+------------------+-------------------+------+-----------+
+only showing top 20 rows
+
+Command took 10.06 seconds -- by databasepipeline@gmail.com at
+7/20/2022, 10:38:18 AM on dem3
+////
+//Cmd 15 <#notebook/807394446833859/command/3345943624692767>
+//
+Python <#>//// <#>// <#>// <#>// <#>// <#>
+display(data)
+
+xxxxxxxxxx
+
+1
+ 
+1
+
+display(data)
+
+//(7) Spark Jobs
+-0.01-0.01-0.010.002019-11-15T19:28:43.000+00002019-11-15T19:35:13.000+00002019-11-15T19:41:43.000+0000TOOLTIPAbsolute TimeTemperature
+
+Aggregated (by sum) in the backend.
+
+Truncated results, showing first 1000 rows.
+
+Click to re-execute with maximum result limits.
+
+// <#> // <#>** <#>
+
+  * // Bar <#>
+  * // Scatter <#>
+  * // Map <#>
+  * // Line <#>
+  * // Area <#>
+  * // Pie <#>
+
+  * // Quantile <#>
+  * // Histogram <#>
+  * // Box plot <#>
+  * // Q-Q plot <#>
+  * // Pivot <#>
+  * Legacy charts <#>
+
+  * // Bar (v1) <#>
+  * // Line (v2) <#>
+  * // Line (v1) <#>
+
+Plot Options... <#>
+//
+Command took 23.10 seconds -- by databasepipeline@gmail.com at
+7/20/2022, 11:02:52 AM on dem3
+////
+//Cmd 16 <#notebook/807394446833859/command/3345943624692775>
+//
+Python <#>//// <#>// <#>// <#>// <#>// <#>
+
+xxxxxxxxxx
+
+1
+ 
+1
+
+display(data)
+
+//(7) Spark Jobs
+19:28Nov 15, 201919:2919:3019:3119:3219:3319:3419:3519:3619:3719:3819:3919:4019:4119:4219:4319:4419:4519:46468101214161820
+
+Absolute TimeVoltage_Data
+
+Aggregated (by sum) in the backend.
+
+Truncated results, showing first 1000 rows.
+
+Click to re-execute with maximum result limits.
+
+// <#> // <#>** <#>
+
+  * // Bar <#>
+  * // Scatter <#>
+  * // Map <#>
+  * // Line <#>
+  * // Area <#>
+  * // Pie <#>
+
+  * // Quantile <#>
+  * // Histogram <#>
+  * // Box plot <#>
+  * // Q-Q plot <#>
+  * // Pivot <#>
+  * Legacy charts <#>
+
+  * // Bar (v1) <#>
+  * // Line (v2) <#>
+  * // Line (v1) <#>
+
+Plot Options... <#>
+//
+Command took 22.78 seconds -- by databasepipeline@gmail.com at
+7/20/2022, 11:03:51 AM on dem3
+////
+//Cmd 17 <#notebook/807394446833859/command/3345943624692776>
+//
+Python <#>//// <#>// <#>// <#>// <#>// <#>
+
+xxxxxxxxxx
+
+1
+ 
+1
+
+display(data)
+
+//(7) Spark Jobs
+19:29Nov 15, 201919:3019:3119:3219:3319:3419:3519:3619:3719:3819:3919:4019:4119:4219:4319:4419:45−1500−1000−50005001000
+
+Absolute Timecurrent_Data
+
+Aggregated (by sum) in the backend.
+
+Truncated results, showing first 1000 rows.
+
+Click to re-execute with maximum result limits.
+
+// <#> // <#>** <#>
+
+  * // Bar <#>
+  * // Scatter <#>
+  * // Map <#>
+  * // Line <#>
+  * // Area <#>
+  * // Pie <#>
+
+  * // Quantile <#>
+  * // Histogram <#>
+  * // Box plot <#>
+  * // Q-Q plot <#>
+  * // Pivot <#>
+  * Legacy charts <#>
+
+  * // Bar (v1) <#>
+  * // Line (v2) <#>
+  * // Line (v1) <#>
+
+Plot Options... <#>
+//
+Command took 23.15 seconds -- by databasepipeline@gmail.com at
+7/20/2022, 11:03:16 AM on dem3
+////
+//Cmd 18 <#notebook/807394446833859/command/3345943624692777>
+//
+Python <#>//// <#>// <#>// <#>// <#>// <#>
+
+xxxxxxxxxx
+
+1
+ 
+1
+
+display(data)
+
+//(3) Spark Jobs
+19:30Nov 15, 201919:3519:4019:4519:5019:5520:0020:0520:1020:1520:2020:25250.1251251025100251000
+
+Absolute TimeCapcity_Data
+
+Showing sample based on the first 1000 rows. Aggregate over all results.
+<#> /Apply to aggregate over all results. ///
+
+Click to re-execute with maximum result limits.
+
+// <#> // <#>** <#>
+
+  * // Bar <#>
+  * // Scatter <#>
+  * // Map <#>
+  * // Line <#>
+  * // Area <#>
+  * // Pie <#>
+
+  * // Quantile <#>
+  * // Histogram <#>
+  * // Box plot <#>
+  * // Q-Q plot <#>
+  * // Pivot <#>
+  * Legacy charts <#>
+
+  * // Bar (v1) <#>
+  * // Line (v2) <#>
+  * // Line (v1) <#>
+
+Plot Options... <#>
+//
+Command took 8.83 seconds -- by databasepipeline@gmail.com at 7/20/2022,
+10:47:22 AM on dem3
+////
+//Cmd 19 <#notebook/807394446833859/command/3345943624692779>
+//
+Python <#>//// <#>// <#>// <#>// <#>// <#>
+
+xxxxxxxxxx
+
+1
+ 
+1
+
+display(data)
+
+//(3) Spark Jobs
+2019-11-15T19:33:37.000+00002019-11-15T19:45:11.000+00002019-11-15T19:53:33.000+00002019-11-15T20:14:25.000+00002019-11-15T19:56:45.000+00002019-11-15T19:42:55.000+00002019-11-15T20:18:02.000+00002019-11-15T20:19:52.000+00002019-11-15T20:13:01.000+00002019-11-15T20:05:03.000+00002019-11-15T20:15:36.000+00002019-11-15T19:36:36.000+00002019-11-15T19:55:51.000+00002019-11-15T20:19:08.000+00002019-11-15T20:13:55.000+00002019-11-15T19:29:13.000+00002019-11-15T20:23:27.000+00002019-11-15T19:38:58.000+00002019-11-15T19:33:25.000+00002019-11-15T20:28:50.000+0000−0.006−0.005−0.004−0.003−0.002−0.0010
+
+Absolute TimeTemperature
+
+Showing sample based on the first 1000 rows. Aggregate over all results.
+<#> /Apply to aggregate over all results. ///
+
+Click to re-execute with maximum result limits.
+
+// <#> // <#>** <#>
+
+  * // Bar <#>
+  * // Scatter <#>
+  * // Map <#>
+  * // Line <#>
+  * // Area <#>
+  * // Pie <#>
+
+  * // Quantile <#>
+  * // Histogram <#>
+  * // Box plot <#>
+  * // Q-Q plot <#>
+  * // Pivot <#>
+  * Legacy charts <#>
+
+  * // Bar (v1) <#>
+  * // Line (v2) <#>
+  * // Line (v1) <#>
+
+Plot Options... <#>
+//
+Command took 8.49 seconds -- by databasepipeline@gmail.com at 7/20/2022,
+10:49:58 AM on dem3
+////
+//Cmd 20 <#notebook/807394446833859/command/3345943624692778>
+//
+Python <#>//// <#>// <#>// <#>// <#>
+
+1
+ 
+
+////
+Shift+Enter to run   
+
+//
+<#>
+Workspace // Home
+
+  * //Workspace
+    //
+     <#>
+  * //Shared
+    //
+     <#>
+  * //Users
+    //
+     <#>
+  * //assigment
+    //
+     <#notebook/4243957486480889>
+
+  * //Users
+    //
+     <#>
+  * //databasepipeline@gmail.com
+    //
+     <#>
+
+  * //databasepipeline@gmail.com
+    //
+     <#>
+  * //2022-06-10 - DBFS Example
+    //
+     <#notebook/2380321063505442>
+  * //dataframe
+    //
+     <#notebook/1407051567663114>
+  * //flatmap
+    //
+     <#notebook/915030402469702>
+  * //Hello World
+    //
+     <#notebook/1552971574377069>
+  * //jake
+    //
+     <#notebook/1711118278089486>
+  * //map
+    //
+     <#notebook/915030402469700>
+  * //pysparknotebook
+    //
+     <#notebook/807394446833859>
+  * //pysparknotebook2
+    //
+     <#notebook/3345943624692780>
+  * //quiz
+    //
+     <#notebook/2829977036726867>
+  * //sample
+    //
+     <#notebook/4458941698903294>
+  * //test
+    //
+     <#notebook/1407051567663128>
+  * //wordcount
+    //
+     <#notebook/2380321063505436>
+
+// <#>// <#>
+//
+
+
+      Recent Activity
+      /
+
+      /
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Ran a command
+
+    2022-07-20 11:03:49
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Ran a command
+
+    2022-07-20 11:03:16
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Ran a command
+
+    2022-07-20 11:02:51
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Ran a command
+
+    2022-07-20 11:01:23
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Ran a command
+
+    2022-07-20 10:49:58
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Added a command
+
+    2022-07-20 10:47:28
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Ran a command
+
+    2022-07-20 10:47:22
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Added a command
+
+    2022-07-20 10:47:22
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Ran a command
+
+    2022-07-20 10:44:35
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Added a command
+
+    2022-07-20 10:44:34
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Ran a command
+
+    2022-07-20 10:43:39
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Ran a command
+
+    2022-07-20 10:42:09
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Added a command
+
+    2022-07-20 10:42:09
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Ran a command
+
+    2022-07-20 10:39:06
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Added a command
+
+    2022-07-20 10:39:06
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Ran a command
+
+    2022-07-20 10:38:18
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Ran a command
+
+    2022-07-20 10:38:14
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Ran a command
+
+    2022-07-20 10:38:02
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Ran a command
+
+    2022-07-20 10:37:40
+
+  *
+    D
+
+    databasepipeline@gmail.com:
+
+    Ran a command
+
+    2022-07-20 10:36:56
+
+[OPS] <https://community.cloud.databricks.com/ops/> Debug
+<https://community.cloud.databricks.com/ops/debug> Metrics
+<https://community.cloud.databricks.com/ops/metrics> Requests
+<https://community.cloud.databricks.com/ops/requests>
+# Clone <#>
+# Export <#>
+
+  * DBC Archive <#>
+  * Source File <#>
+  * HTML <#>
+
+# Permissions <#>
+# Copy Link Address <#>
+Workspace/Users/databasepipeline@gmail.com/pysparknotebook
+
+Run all cells in this notebook.
